@@ -54,27 +54,37 @@ const addRecipe = async (req, res) => {
         if (!title || !ingredients || !instructions) {
             return res.status(400).json({ message: "Title, ingredients and instructions are required" })
         }
-
+        // console.log(req.body);
+        // console.log("Category Before :", category);
         const newRecipe = await Recipe.create({
             title,
             description,
-            category,
+            category: category || undefined,
             cuisine,
             difficulty,
             preparationTime,
             cookingTime,
             servings,
-            ingredients: Array.isArray(ingredients) ? ingredients : ingredients.split(",").map(i => i.trim()),
-            instructions: Array.isArray(instructions) ? instructions : instructions.split("\n").filter(Boolean),
-            tags: tags ? (Array.isArray(tags) ? tags : tags.split(",").map(t => t.trim())) : [],
+            ingredients: Array.isArray(ingredients)
+                ? ingredients
+                : ingredients.split(",").map(i => i.trim()),
+            instructions: Array.isArray(instructions)
+                ? instructions
+                : instructions.split("\n").filter(Boolean),
+            tags: tags
+                ? (Array.isArray(tags)
+                    ? tags
+                    : tags.split(",").map(t => t.trim()))
+                : [],
             coverImage: req.file ? req.file.filename : "",
-            ownerId: req.user.id
-        })
+            ownerId: req.user.id,
+        });
 
         if (category) {
             await Category.findByIdAndUpdate(category, { $inc: { recipeCount: 1 } })
         }
-
+        // console.log(req.body);
+        // console.log("Category After :", category);
         res.status(201).json(newRecipe)
     } catch (err) {
         res.status(500).json({ message: err.message })

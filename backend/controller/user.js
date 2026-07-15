@@ -51,6 +51,7 @@ const userLogin = async (req, res) => {
         }
 
         const token = signToken(user)
+        // console.log(token);
         return res.status(200).json({ token, user: sanitize(user) })
     } catch (err) {
         return res.status(500).json({ message: err.message })
