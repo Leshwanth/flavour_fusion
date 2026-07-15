@@ -11,7 +11,7 @@ const AddRecipe = () => {
         ingredients: "", instructions: "", description: ""
     })
     const [file, setFile] = useState(null)
-
+    // let token = localStorage.getItem('token');
     useEffect(() => {
         api.get("/category").then(res => setCategories(res.data)).catch(console.error)
     }, [])
@@ -26,13 +26,32 @@ const AddRecipe = () => {
 
         try {
             const res = await api.post("/recipe", data, {
-                headers: { "Content-Type": "multipart/form-data" }
-            })
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
             navigate(`/recipes/${res.data._id}`)
         } catch (err) {
             alert(err.response?.data?.message || "Failed to publish recipe")
         }
     }
+
+
+
+    const categoryOptions = [
+        "Breakfast",
+        "Lunch",
+        "Dinner",
+        "Dessert",
+        "Snacks",
+        "Beverages",
+        "Vegetarian",
+        "Non-Vegetarian",
+        "Salads",
+        "Soups",
+        "Fast Food",
+        "Healthy"
+    ];
 
     return (
         <form onSubmit={handleSubmit} className="px-8 py-6 max-w-3xl mx-auto grid gap-4">
@@ -40,11 +59,27 @@ const AddRecipe = () => {
 
             <input name="title" placeholder="Recipe title" value={form.title} onChange={handleChange} required className="border rounded-lg px-3 py-2" />
 
-            <div className="grid grid-cols-2 gap-4">
-                <select name="category" value={form.category} onChange={handleChange} className="border rounded-lg px-3 py-2">
-                    <option value="">Select category</option>
-                    {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
-                </select>
+            <div className="grid  gap-4">
+                <div className="relative">
+                {/* <select
+                    name="category"
+                    value={form.category}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                >
+                    <option value="">🍽️ Select Category</option>
+                    <option value="Breakfast">🍳 Breakfast</option>
+                    <option value="Lunch">🍛 Lunch</option>
+                    <option value="Dinner">🍽️ Dinner</option>
+                    <option value="Dessert">🍰 Dessert</option>
+                    <option value="Snacks">🍟 Snacks</option>
+                    <option value="Beverages">🥤 Beverages</option>
+                    <option value="Vegetarian">🥗 Vegetarian</option>
+                    <option value="Non-Vegetarian">🍗 Non-Vegetarian</option>
+                    <option value="Healthy">🥑 Healthy</option>
+                    <option value="Fast Food">🍔 Fast Food</option>
+                </select> */}
+                </div>
                 <input name="cuisine" placeholder="e.g. Italian, Indian" value={form.cuisine} onChange={handleChange} className="border rounded-lg px-3 py-2" />
             </div>
 

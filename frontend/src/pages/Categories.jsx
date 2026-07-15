@@ -6,8 +6,16 @@ const Categories = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        api.get("/category").then(res => setCategories(res.data)).catch(console.error)
-    }, [])
+        api.get("/category")
+            .then(res => {
+                console.log("Categories:", res.data);
+                setCategories(res.data);
+            })
+            .catch(console.error);
+    }, []);
+
+
+    
 
     return (
         <div className="px-8 py-6">
