@@ -194,17 +194,7 @@ Recipe cover images are uploaded using **Multer** and stored on the server.
 - Dark Mode
 - Recipe Collections
 - Bookmark Folders
-
 ---
-
-## 👨‍💻 Author
-
-**Leshwanth**
-
-GitHub: https://github.com/Leshwanth
-
----
-
-## ⭐ Support
-
+<div align='center'>
 If you found this project helpful, consider giving it a ⭐ on GitHub!
+</div>
